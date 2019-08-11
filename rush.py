@@ -37,16 +37,19 @@ def color_locs():
 
 cent = (15, 20)
 red_click, blue_click, green_click, yellow_click = color_locs()
+colors = [RED, BLUE, GREEN, YELLOW]
 rotate = lambda clicks: [x - clicks if x - clicks > 0 else (x - clicks) % 4 for x in [red_click, blue_click, green_click, yellow_click]]
 while True:
     screen = ImageGrab.grab(bbox=(933,271,964,595))
-    for i in range(20, 5, -1):
+    for i in range(30, 10, -1):
         cr, cg, cb = screen.getpixel((15, i))
         orb_loc = (cr, cg, cb)
         if orb_loc != RED and orb_loc != GREEN and orb_loc != YELLOW and orb_loc != BLUE:
             if orb_loc != (255, 255, 255):
-                dprint(orb_loc)    
-            continue
+                dprint('Changed\n')
+                orb_loc = sorted(colors, key=lambda x: abs(sum(orb_loc) - sum(x)))[0]
+            else:
+                continue
         dprint(f'red_click: {red_click}\nblue_click: {blue_click}\ngreen_click: {green_click}\nyellow_click:{yellow_click}\n\n')
         if orb_loc == RED:
             dprint('orb == red\n')
